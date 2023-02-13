@@ -58,6 +58,8 @@ jobs:
     - name: Compile firmware
       run: |
         cd openwrt
+        make defconfig
+        make download
         make -j1 V=s
 
     - name: Show output files
