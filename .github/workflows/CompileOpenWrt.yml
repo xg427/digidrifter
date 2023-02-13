@@ -43,6 +43,7 @@ jobs:
     - name: Select target and packages
       run: |
         cd openwrt
+        export TERM=xterm
         make menuconfig <<EOF
         /v2ray
         y
