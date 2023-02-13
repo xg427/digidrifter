@@ -49,4 +49,5 @@ jobs:
         
     - name: Compile firmware
       run: |
+        cd openwrt
         make -j$(nproc)
