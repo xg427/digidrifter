@@ -9,7 +9,7 @@ on:
         required: false
         default: 'false'
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: openwrt-22.03
 
 jobs:
