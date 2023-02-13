@@ -35,9 +35,13 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
+    - name: Prepare environment
+      run: |
+        cd openwrt
+        make defconfig
+
     - name: Select target and packages
       run: |
-        make defconfig
         # 搜索以#开头，带有x86的字符串，并删除字符串开头的#号
         sed -i 's/^#\(.*x86.*\)$/\1/' .config
         make defconfig
