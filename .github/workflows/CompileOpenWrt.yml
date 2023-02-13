@@ -53,6 +53,10 @@ jobs:
         cd openwrt
         make -j1 V=s
 
+    - name: Show output files
+      run: |
+        ls openwrt/bin/targets/x86/64/
+  
     - name: Upload firmware
       uses: actions/upload-artifact@main
       with:
