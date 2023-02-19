@@ -40,16 +40,10 @@ jobs:
         cd openwrt
         make defconfig
 
-    - name: Select target and packages
+    - name: Load custom configuration
       run: |
+        [ -e $CONFIG_FILE ] && cp $CONFIG_FILE openwrt/.config
         cd openwrt
-        export TERM=xterm
-        make menuconfig <<EOF
-        /v2ray
-        y
-        /luci-app-v2ray
-        y
-        EOF
 
     - name: Show.config
       run: |
