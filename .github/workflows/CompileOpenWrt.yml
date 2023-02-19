@@ -51,12 +51,10 @@ jobs:
         cd openwrt
         cat .config
 
-    - name: Compile firmware
+    - name: Build the firmware image
       run: |
         cd openwrt
-        make defconfig
-        make download
-        make -j1 V=s
+        make -j1 V=s defconfig download clean world
 
     - name: Show output files
       run: |
