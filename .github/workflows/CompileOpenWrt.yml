@@ -37,11 +37,6 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Prepare environment
-      run: |
-        cd openwrt
-        make defconfig
-
     - name: Load custom configuration
       run: |
         [ -e $CONFIG_FILE ] && cp $CONFIG_FILE openwrt/.config
