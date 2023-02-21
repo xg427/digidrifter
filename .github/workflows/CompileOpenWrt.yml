@@ -1,3 +1,4 @@
+#make -j1 V=s defconfig download clean world
 name: Compile OpenWrt
 
 on:
@@ -51,10 +52,20 @@ jobs:
         cd openwrt
         cat .config
 
+    - name: Download package
+      id: package
+      run: |
+        cd openwrt
+        make defconfig
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
     - name: Build the firmware image
       run: |
         cd openwrt
-        make -j1 V=s defconfig download clean world
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 || make -j1 V=s
 
     - name: Show output files
       run: |
