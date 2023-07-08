@@ -11,7 +11,7 @@ on:
         default: 'false'
 env:
   REPO_URL: https://github.com/openwrt/openwrt.git
-  REPO_BRANCH: openwrt-22.03
+  REPO_BRANCH: v22.03.5
   CONFIG_FILE: .config
 
 jobs:
