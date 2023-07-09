@@ -57,7 +57,7 @@ jobs:
       run: |
         ls -l config
         ls -l config/v22.03.5-x86_64
-        [ -e "$CONFIG" ] && cp "$CONFIG" openwrt/.config || echo "! CONFIG file $CONFIG does not exist"
+        [ -e ${{env.CONFIG}} ] && cp ${{env.CONFIG}} openwrt/.config || echo "! CONFIG file ${{env.CONFIG}} does not exist"
         cd openwrt
         ls -l .config
         cat .config
@@ -67,12 +67,12 @@ jobs:
         cd openwrt
         make defconfig
         cat .config
-        make download -j$THREADS
+        make download -j${{env.THREADS}}
 
     - name: Compile
       run: |
         cd openwrt
-        make -j$THREADS || make -j1 V=s
+        make -j${{env.THREADS}} || make -j1 V=s
     
     - name: Show bin
       run: |
