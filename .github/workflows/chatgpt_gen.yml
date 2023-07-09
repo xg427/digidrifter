@@ -23,6 +23,12 @@ jobs:
         path: openwrt
         ref: ${{env.OPENWRT_BRANCH}}
 
+    - name: Show env
+      run: |
+        echo CONFIG is ${{env.CONFIG}}
+        echo CONFIG is ${CONFIG}
+        echo CONFIG is $CONFIG
+        
     - name: Update feeds
       run: |
         cd openwrt
