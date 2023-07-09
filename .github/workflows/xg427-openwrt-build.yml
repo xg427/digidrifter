@@ -1,4 +1,4 @@
-name: Compile OpenWrt
+name: xg427 openwrt build
 
 on:
   repository_dispatch:
