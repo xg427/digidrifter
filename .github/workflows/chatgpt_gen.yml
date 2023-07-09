@@ -44,6 +44,16 @@ jobs:
       run: |
         cd openwrt
         make -j${{env.THREADS}} || make -j1 V=s
+    
+    - name: Show bin
+      run: |
+        cd openwrt/bin
+        ls -lA
+        
+    - name: Show targets
+      run: |
+        cd openwrt/bin/targets
+        ls -lR
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
