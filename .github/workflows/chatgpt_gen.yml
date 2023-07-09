@@ -44,6 +44,7 @@ jobs:
         ls -l config/v22.03.5-x86_64
         [ -e "$CONFIG" ] && cp "$CONFIG" openwrt/.config || echo "! CONFIG file $CONFIG does not exist"
         cd openwrt
+        echo ------------ openwrt/.config -------------
         ls -l .config
         cat .config
         
