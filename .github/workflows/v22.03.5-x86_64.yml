@@ -14,6 +14,8 @@ env:
   CONFIG_FILE: v22.03.5-x86_64
   SSH_ACTION: false
   TZ: Asia/Shanghai
+  UPLOAD_BIN_DIR: true
+  UPLOAD_FIRMWARE: true
 
 permissions:
   contents: read
