@@ -12,7 +12,7 @@ env:
   SOURCE_URL: https://github.com/openwrt/openwrt.git
   SOURCE_BRANCH: openwrt-23.05
   CLONE_DEPTH: 200
-  CONFIG_FILE: configs/for_openwrt2305/x86_64.config
+  CONFIG_FILE: config/openwrt-23.05-x86_64
   DIY_SH: diy.sh
   FIX_SH: fix.sh
   FEEDS_SH: feeds.sh
