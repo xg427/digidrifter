@@ -1,9 +1,7 @@
 name: Build OpenWrt v22.03.5 for x86_64
 
 on:
-  push:
-    branches:
-      - master
+  repository_dispatch:
   workflow_dispatch:
 
 env:
