@@ -21,7 +21,7 @@ jobs:
       with:
         repository: openwrt/openwrt
         path: openwrt
-        ref: ${OPENWRT_BRANCH}
+        ref: ${{env.OPENWRT_BRANCH}}
 
     - name: Update feeds
       run: |
@@ -31,7 +31,7 @@ jobs:
 
     - name: Apply config
       run: |
-        [ -e ${CONFIG} ] && cp  ${CONFIG} openwrt/.config
+        [ -e $CONFIG ] && cp $CONFIG openwrt/.config
         cd openwrt .config
         ls -l 
 
