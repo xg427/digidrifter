@@ -39,8 +39,8 @@ jobs:
     - name: Apply config
       run: |
         [ -e "$CONFIG" ] && cp "$CONFIG" openwrt/.config || echo "! CONFIG file $CONFIG does not exist"
-        cd openwrt .config
-        ls -l 
+        cd openwrt
+        ls -l .config
 
     - name: Make Download
       run: |
