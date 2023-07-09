@@ -16,6 +16,7 @@ env:
 
 jobs:
   build:
+    name: Build OpenWrt Firmware
     runs-on: ubuntu-20.04
 
     steps:
