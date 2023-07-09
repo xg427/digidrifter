@@ -13,7 +13,6 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: v22.03.5
   CONFIG_FILE: .config
-  FORCE_UNSAFE_CONFIGURE: 1
 
 jobs:
   build:
@@ -58,6 +57,8 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
 
     - name: Build the firmware image
+      env:
+        FORCE_UNSAFE_CONFIGURE: 1
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
