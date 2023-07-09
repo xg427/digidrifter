@@ -14,6 +14,9 @@ env:
   REPO_BRANCH: v22.03.5
   CONFIG_FILE: .config
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Build OpenWrt Firmware
