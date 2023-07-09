@@ -11,7 +11,7 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: v22.03.5
-  CONFIG_FILE: x86_64
+  CONFIG_FILE: v22.03.5-x86_64
   SSH_ACTION: false
   TZ: Asia/Shanghai
 
