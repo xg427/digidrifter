@@ -46,8 +46,8 @@ jobs:
       run: |
         cd openwrt
         cat .config
-        id
         ls -l .config
+        id
 
     - name: Download package
       id: package
