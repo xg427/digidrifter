@@ -94,4 +94,9 @@ jobs:
           echo "Current Path:" $PWD
           ls -l -A
           echo "========================================"
+
+      - name: show target
+        run: |
+          cd openwrt/bin/targets/
+          ls -l
           
