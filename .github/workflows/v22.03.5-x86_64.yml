@@ -94,6 +94,10 @@ jobs:
           echo "Current Path:" $PWD
           ls -l -A
           echo "========================================"
+          cd bin
+          echo "Current Path:" $PWD
+          ls -l -A
+          echo "========================================"
 
       - name: show target
         run: |
