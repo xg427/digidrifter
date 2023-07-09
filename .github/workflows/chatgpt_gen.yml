@@ -25,9 +25,10 @@ jobs:
 
     - name: Show env
       run: |
-        echo CONFIG is ${{env.CONFIG}}
-        echo CONFIG is ${CONFIG}
-        echo CONFIG is $CONFIG
+        echo 1 CONFIG is ${{env.CONFIG}}
+        echo 2 CONFIG is ${CONFIG}
+        echo 3 CONFIG is $CONFIG
+        echo 4 CONFIG is "$CONFIG"
         
     - name: Update feeds
       run: |
