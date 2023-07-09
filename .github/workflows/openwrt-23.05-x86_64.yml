@@ -1,5 +1,4 @@
-# .github/workflows/openwrt-23.05-x86_64.yml
-name: openwrt-23.05 for x86_64
+name: openwrt branch openwrt-23.05 for x86_64
 
 on:
   repository_dispatch:
