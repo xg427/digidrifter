@@ -1,4 +1,4 @@
-# 2305_x86_64.yml
+# .github/workflows/openwrt-23.05-x86_64.yml
 name: openwrt-23.05 for x86_64
 
 on:
