@@ -41,11 +41,13 @@ jobs:
         [ -e "$CONFIG" ] && cp "$CONFIG" openwrt/.config || echo "! CONFIG file $CONFIG does not exist"
         cd openwrt
         ls -l .config
+        cat .config
 
     - name: Make Download
       run: |
         cd openwrt
         make defconfig
+        cat .config
         make download -j$THREADS
 
     - name: Compile
