@@ -1,4 +1,4 @@
-name: openwrt v22.03.5 x86_64
+name: openwrt v22.03.5 for x86_64
 
 on:
   repository_dispatch:
