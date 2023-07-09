@@ -13,8 +13,8 @@ env:
   REPO_BRANCH: v22.03.5
   CONFIG_FILE: .config
   CONF_FILE: x86_64
-  DIY0_FILE: DIY0.sh
-  DIY1_FILE: DIY1.sh
+  DIY0_FILE: diy-part1.sh
+  DIY1_FILE: diy-part2.sh
   SSH_ACTION: false
   TZ: Asia/Shanghai
 
