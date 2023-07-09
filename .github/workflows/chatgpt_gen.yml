@@ -35,9 +35,12 @@ jobs:
     
     - name: Apply config
       run: |
-        pwd
+        
+        echo ------------ $(pwd) -------------
         ls -la
+        echo ------------ config -------------
         ls -l config
+        echo ------------ config/v22.03.5-x86_64 -------------
         ls -l config/v22.03.5-x86_64
         [ -e "$CONFIG" ] && cp "$CONFIG" openwrt/.config || echo "! CONFIG file $CONFIG does not exist"
         cd openwrt
