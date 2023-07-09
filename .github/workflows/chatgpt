@@ -1,0 +1,57 @@
+name: Build OpenWrt v22.03.5 for x86_64
+
+on:  
+  push:
+    branches: 
+      - master
+  workflow_dispatch:
+
+env:
+  TZ: Asia/Shanghai 
+  OPENWRT_BRANCH: v22.03.5  
+  CONFIG: config/v22.03.5-x86_64
+  THREADS: $(nproc)
+  CLEAN_DL: '1'
+
+jobs:
+  build:
+   runs-on: ubuntu-latest  
+   
+   steps:  
+    - name: Checkout OpenWrt    
+      uses: actions/checkout@v3  
+      with: 
+        repository: openwrt/openwrt 
+        path: openwrt
+        ref: ${{env.OPENWRT_BRANCH}}
+     
+    - name: Update feeds       
+      run: |
+        cd openwrt
+        ./scripts/feeds update -a   
+        ./scripts/feeds install -a  
+        
+    - name: Apply config       
+      run: |
+        [ -e ${{env.CONFIG}} ] && cp  ${{env.CONFIG}} openwrt/.config
+        cd openwrt
+        make defconfig
+
+    - name: Make Download 
+        run: |
+          cd openwrt
+          make defconfig
+          make download -j${{env.THREADS}} 
+  
+    - name: Compile         
+      run: |
+        cd openwrt
+        make -j${{env.THREADS}} V=s
+      - if: $env:CLEAN_DL == '1'     
+        find dl/ -delete         
+            
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2      
+      with:
+        name: openwrt-v22.03.5-x86_64 
+        path: openwrt/bin/targets/x86_64/*
