@@ -77,16 +77,10 @@ jobs:
       - name: Clone Openwrt Source
         id: clone
         run: |
-          git clone --depth $CLONE_DEPTH -b $SOURCE_BRANCH $SOURCE_URL workspace/openwrt
-          cd workspace/openwrt
+          git clone --depth $CLONE_DEPTH -b $SOURCE_BRANCH $SOURCE_URL openwrt
+          cd openwrt
           echo "OPENWRT_ROOT_PATH=$PWD" >> $GITHUB_ENV
           echo "OPENWRT_ROOT_PATH=$PWD" >> $GITHUB_OUTPUT
-
-          mkdir -p $GITHUB_WORKSPACE/output
-          cd $GITHUB_WORKSPACE/output
-          export TOOLCHAIN_OUTPUT="$(pwd)"
-          echo "TOOLCHAIN_OUTPUT=$TOOLCHAIN_OUTPUT" >> $GITHUB_ENV
-          echo "TOOLCHAIN_OUTPUT=$TOOLCHAIN_OUTPUT" >> $GITHUB_OUTPUT
 
       - name: Generate Toolchain Config
         run: |
@@ -94,7 +88,7 @@ jobs:
           echo -e "\nCONFIG_ALL=y" >> $OPENWRT_ROOT_PATH/.config
           echo -e "\nCONFIG_ALL_NONSHARED=y" >> $OPENWRT_ROOT_PATH/.config
           cd $OPENWRT_ROOT_PATH
-          make defconfig > /dev/null 2>&1
+          make defconfig
 
       - name: Generate Variables
         id: env
