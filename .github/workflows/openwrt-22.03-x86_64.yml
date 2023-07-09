@@ -21,33 +21,39 @@ jobs:
       with:
         repository: openwrt/openwrt
         path: openwrt
-        ref: ${{env.OPENWRT_BRANCH}}
+        ref: $OPENWRT_BRANCH
 
     - name: Update feeds
       run: |
         cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+        
+    - name: Show env
+      run: |
+        echo CONFIG is ${CONFIG}
+        echo CONFIG is $CONFIG
 
     - name: Apply config
       run: |
-        [ -e ${{env.CONFIG}} ] && cp  ${{env.CONFIG}} openwrt/.config
+        [ -e $CONFIG ] && cp  $CONFIG openwrt/.config
         cd openwrt
+        ls -l .config
 
     - name: Make Download
       run: |
         cd openwrt
         make defconfig
-        make download -j${{env.THREADS}}
+        make download -j$THREADS
 
     - name: Compile
       run: |
         cd openwrt
-        make -j${{env.THREADS}} || make -j1 V=s
+        make -j$THREADS || make -j1 V=s
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: openwrt-${{env.OPENWRT_VERSION}}-x86_64
+        name: openwrt-$OPENWRT_VERSION-x86_64
         path: openwrt/bin/targets/x86_64/*
 
