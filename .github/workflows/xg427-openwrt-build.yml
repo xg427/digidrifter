@@ -11,8 +11,7 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: v22.03.5
-  CONFIG_FILE: .config
-  CONF_FILE: x86_64
+  CONFIG_FILE: x86_64
   SSH_ACTION: false
   TZ: Asia/Shanghai
 
@@ -67,7 +66,7 @@ jobs:
       # 配置文件
       - name: Config File
         run: |
-          [ -e config/$CONF_FILE ] && cp -r -f config/$CONF_FILE openwrt/.config
+          [ -e config/$CONFIG_FILE ] && cp -r -f config/$CONFIG_FILE openwrt/.config
 
       # 下载依赖
       - name: Make Download
