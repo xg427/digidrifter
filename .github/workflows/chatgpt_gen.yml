@@ -33,20 +33,17 @@ jobs:
       run: |
         [ -e ${{env.CONFIG}} ] && cp  ${{env.CONFIG}} openwrt/.config
         cd openwrt
-        make defconfig
 
     - name: Make Download
-        run: |
-          cd openwrt
-          make defconfig
-          make download -j${{env.THREADS}}
+      run: |
+        cd openwrt
+        make defconfig
+        make download -j${{env.THREADS}}
 
     - name: Compile
       run: |
         cd openwrt
         make -j${{env.THREADS}} V=s
-      - if: $env:CLEAN_DL == '1'
-        find dl/ -delete
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
