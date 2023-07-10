@@ -6,7 +6,8 @@ on:
 
 env:
   OPENWRT_BRANCH: openwrt-22.03
-  CONFIG: config/openwrt-22.03-x86_64
+  # CONFIG: config/openwrt-22.03-x86_64
+  CONFIG: config/openwrt-22.03-x86_64-virtualbox
   OPENWRT_ROOT_PATH: openwrt
   THREADS: $(nproc)
   CLEAN_DL: '1'
