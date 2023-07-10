@@ -36,7 +36,7 @@ jobs:
 
     - name: Load Custom Configuration
       run: |
-        [ -e ${{env.CONFIG}} ] && cp ${{env.CONFIG}} openwrt/.config || echo "! CONFIG file ${{env.CONFIG}} does not exist"
+        [ -e ${{env.CONFIG}} ] && cp ${{env.CONFIG}} ${{env.OPENWRT_ROOT_PATH}}/.config || echo "! CONFIG file ${{env.CONFIG}} does not exist"
         cd ${{env.OPENWRT_ROOT_PATH}}
         make defconfig
         cat .config
