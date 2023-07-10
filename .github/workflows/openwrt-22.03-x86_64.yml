@@ -1,4 +1,4 @@
-name: Build OpenWrt openwrt-22.03 for x86_64
+name: Build OpenWrt(openwrt-22.03) for x86_64
 
 on:
   repository_dispatch:
@@ -25,38 +25,68 @@ jobs:
         repository: openwrt/openwrt
         path: openwrt
         ref: ${{env.OPENWRT_BRANCH}}
-
+        
     - name: Update feeds
       run: |
         cd openwrt
+        ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        
-    - name: Show env
-      run: |
-        echo CONFIG is ${CONFIG}
-        echo CONFIG is $CONFIG
 
-    - name: Apply config
+    - name: Load Custom Configuration
       run: |
-        [ -e ${{env.CONFIG}} ] && cp  ${{env.CONFIG}} openwrt/.config
-        cd openwrt
-        ls -l .config
-
-    - name: Make Download
-      run: |
+        [ -e ${{env.CONFIG}} ] && cp ${{env.CONFIG}} openwrt/.config || echo "! CONFIG file ${{env.CONFIG}} does not exist"
         cd openwrt
         make defconfig
-        make download -j${{env.THREADS}}
+        cat .config
+        
+    - name: Generate Variables
+      id: env
+      run: |
+        cd openwrt
+        export DEVICE_TARGET=$(cat .config | grep CONFIG_TARGET_BOARD | awk -F '"' '{print $2}')
+        echo "DEVICE_TARGET=$DEVICE_TARGET" >> $GITHUB_ENV
+        echo DEVICE_TARGET is $DEVICE_TARGET
+        
+        export DEVICE_SUBTARGET=$(cat .config | grep CONFIG_TARGET_SUBTARGET | awk -F '"' '{print $2}')
+        echo "DEVICE_SUBTARGET=$DEVICE_SUBTARGET" >> $GITHUB_ENV
+        echo DEVICE_SUBTARGET is $DEVICE_SUBTARGET
 
-    - name: Compile
+    - name: Show Generated Variables
+      run: |
+        echo DEVICE_TARGET is ${{env.DEVICE_TARGET}}
+        echo DEVICE_SUBTARGET is ${{env.DEVICE_SUBTARGET}}
+        
+    - name: Download Packages
+      run: |
+        make download -j${{env.THREADS}}
+        df -hT
+
+    - name: Generate Firmware
       run: |
         cd openwrt
         make -j${{env.THREADS}} || make -j1 V=s
+        
+    - name: Print Sha256sums
+      run: |
+        cd openwrt/bin/targets/$DEVICE_TARGET/$DEVICE_SUBTARGET
+        cat sha256sums
+    
+    - name: Show bin
+      run: |
+        cd openwrt/bin
+        ls -lA
+        
+    - name: Show targets
+      run: |
+        cd openwrt/bin/targets
+        echo ========================= $(pwd) =========================
+        ls -lR
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
         name: openwrt-${{env.OPENWRT_VERSION}}-x86_64
         path: openwrt/bin/targets/x86/64/*
+
 
