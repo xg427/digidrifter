@@ -38,6 +38,12 @@ jobs:
         path: ${{env.OPENWRT_ROOT_PATH}}
         ref: ${{env.OPENWRT_BRANCH}}
         
+    - name: Clone 3rd code
+      run: |
+        cd openwrt
+        mkdir -p package/mycustom
+        git clone -b luci2 https://github.com/kuoruan/luci-app-v2ray.git luci-app-v2ray package/mycustom/luci-app-v2ray
+
     - name: Update feeds
       run: |
         cd ${{env.OPENWRT_ROOT_PATH}}
@@ -68,9 +74,11 @@ jobs:
       run: |
         cd ${{env.OPENWRT_ROOT_PATH}}
         make download -j${{env.THREADS}}
+        find dl -size -1024c -exec rm -f {} \;
         df -hT
 
     - name: Compile
+      id: compile
       run: |
         cd ${{env.OPENWRT_ROOT_PATH}}
         make -j${{env.THREADS}} || make -j1 V=s
