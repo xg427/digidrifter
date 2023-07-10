@@ -36,6 +36,7 @@ jobs:
     - name: Update feeds
       run: |
         cd openwrt
+        ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
@@ -52,11 +53,17 @@ jobs:
         make defconfig
         cat .config
         make download -j${{env.THREADS}}
+        df -hT
 
     - name: Compile
       run: |
         cd openwrt
         make -j${{env.THREADS}} || make -j1 V=s
+        
+    - name: Print Sha256sums
+      run: |
+        cd openwrt/bin/targets/$DEVICE_TARGET/$DEVICE_SUBTARGET
+        cat sha256sums
     
     - name: Show bin
       run: |
