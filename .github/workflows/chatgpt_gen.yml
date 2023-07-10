@@ -40,18 +40,27 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Apply config
+    - name: Load Custom Configuration
       run: |
         [ -e ${{env.CONFIG}} ] && cp ${{env.CONFIG}} openwrt/.config || echo "! CONFIG file ${{env.CONFIG}} does not exist"
         cd openwrt
+        make defconfig
+        cat .config
+        
+    - name: Generate Variables
+      id: env
+      run: |
+        cd openwrt
         export DEVICE_TARGET=$(cat .config | grep CONFIG_TARGET_BOARD | awk -F '"' '{print $2}')
+        echo "DEVICE_TARGET=$DEVICE_TARGET" >> $GITHUB_ENV
         echo DEVICE_TARGET is $DEVICE_TARGET
+        
+        export DEVICE_SUBTARGET=$(cat .config | grep CONFIG_TARGET_SUBTARGET | awk -F '"' '{print $2}')
+        echo "DEVICE_SUBTARGET=$DEVICE_SUBTARGET" >> $GITHUB_ENV
+        echo DEVICE_SUBTARGET is $DEVICE_SUBTARGET
 
     - name: Make Download
       run: |
-        cd openwrt
-        make defconfig
-        cat .config
         make download -j${{env.THREADS}}
         df -hT
 
