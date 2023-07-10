@@ -66,6 +66,7 @@ jobs:
     - name: Show targets
       run: |
         cd openwrt/bin/targets
+        echo ========================= $(pwd) =========================
         ls -lR
 
     - name: Upload Artifacts
