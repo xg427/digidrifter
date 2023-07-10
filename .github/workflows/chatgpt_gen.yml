@@ -42,7 +42,7 @@ jobs:
       run: |
         cd openwrt
         mkdir -p package/mycustom
-        git clone -b luci2 https://github.com/kuoruan/luci-app-v2ray.git luci-app-v2ray package/mycustom/luci-app-v2ray
+        git clone -b luci2 https://github.com/kuoruan/luci-app-v2ray.git package/mycustom/luci-app-v2ray
 
     - name: Update feeds
       run: |
