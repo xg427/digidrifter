@@ -89,5 +89,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: openwrt-$OPENWRT_VERSION-x86_64
-        path: openwrt/bin/targets/x86_64/*
+        path: openwrt/bin/targets/x86/64/*
 
