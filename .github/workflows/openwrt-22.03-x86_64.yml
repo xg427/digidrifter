@@ -39,7 +39,7 @@ jobs:
 
     - name: Apply config
       run: |
-        [ -e $CONFIG ] && cp  $CONFIG openwrt/.config
+        [ -e ${{env.CONFIG}} ] && cp  ${{env.CONFIG}} openwrt/.config
         cd openwrt
         ls -l .config
 
@@ -47,12 +47,12 @@ jobs:
       run: |
         cd openwrt
         make defconfig
-        make download -j$THREADS
+        make download -j${{env.THREADS}}
 
     - name: Compile
       run: |
         cd openwrt
-        make -j$THREADS || make -j1 V=s
+        make -j${{env.THREADS}} || make -j1 V=s
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
