@@ -47,7 +47,6 @@ jobs:
     - name: Update feeds
       run: |
         cd ${{env.OPENWRT_ROOT_PATH}}
-        ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
