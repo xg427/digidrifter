@@ -32,21 +32,6 @@ jobs:
         echo 2 CONFIG is ${CONFIG}
         echo 3 CONFIG is $CONFIG
         echo 4 CONFIG is "$CONFIG"
-    
-    - name: Apply config
-      run: |
-        
-        echo ------------ $(pwd) -------------
-        ls -la
-        echo ------------ config -------------
-        ls -l config
-        echo ------------ config/v22.03.5-x86_64 -------------
-        ls -l config/v22.03.5-x86_64
-        [ -e "$CONFIG" ] && cp "$CONFIG" openwrt/.config || echo "! CONFIG file $CONFIG does not exist"
-        cd openwrt
-        echo ------------ openwrt/.config -------------
-        ls -l .config
-        cat .config
         
     - name: Update feeds
       run: |
@@ -56,12 +41,8 @@ jobs:
 
     - name: Apply config
       run: |
-        ls -l config
-        ls -l config/v22.03.5-x86_64
         [ -e ${{env.CONFIG}} ] && cp ${{env.CONFIG}} openwrt/.config || echo "! CONFIG file ${{env.CONFIG}} does not exist"
         cd openwrt
-        ls -l .config
-        cat .config
         export DEVICE_TARGET=$(cat .config | grep CONFIG_TARGET_BOARD | awk -F '"' '{print $2}')
         echo DEVICE_TARGET is $DEVICE_TARGET
 
