@@ -24,7 +24,7 @@ jobs:
       with:
         repository: openwrt/openwrt
         path: openwrt
-        ref: $OPENWRT_BRANCH
+        ref: ${{env.OPENWRT_BRANCH}}
 
     - name: Update feeds
       run: |
