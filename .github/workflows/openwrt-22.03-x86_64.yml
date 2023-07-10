@@ -92,13 +92,16 @@ jobs:
     - name: Show targets
       run: |
         cd ${{env.OPENWRT_ROOT_PATH}}/bin/targets
-        echo ========================= $(pwd) =========================
+        echo =======================================================
+        echo = $(pwd)
+        echo =======================================================
         ls -lR
+        echo =======================================================
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
         name: openwrt-${{env.OPENWRT_VERSION}}-x86_64
-        path: cd ${{env.OPENWRT_ROOT_PATH}}/bin/targets/x86/64/*
+        path: ${{env.OPENWRT_ROOT_PATH}}/bin/targets/${{env.DEVICE_TARGET}}/${{env.DEVICE_SUBTARGET}}/*
 
 
