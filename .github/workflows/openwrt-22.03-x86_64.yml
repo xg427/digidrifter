@@ -59,6 +59,7 @@ jobs:
         
     - name: Download Packages
       run: |
+        cd openwrt
         make download -j${{env.THREADS}}
         df -hT
 
