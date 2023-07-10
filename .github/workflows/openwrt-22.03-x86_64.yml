@@ -5,12 +5,12 @@ on:
   workflow_dispatch:
 
 env:
-  TZ: Asia/Shanghai
   OPENWRT_BRANCH: openwrt-22.03
   CONFIG: config/openwrt-22.03-x86_64
   OPENWRT_ROOT_PATH: openwrt
   THREADS: $(nproc)
   CLEAN_DL: '1'
+  TZ: Asia/Shanghai
 
 jobs:
   build:
