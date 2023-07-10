@@ -8,6 +8,7 @@ env:
   TZ: Asia/Shanghai
   OPENWRT_BRANCH: openwrt-22.03
   CONFIG: config/openwrt-22.03-x86_64
+  OPENWRT_ROOT_PATH: openwrt
   THREADS: $(nproc)
   CLEAN_DL: '1'
 
@@ -23,12 +24,12 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: openwrt/openwrt
-        path: openwrt
+        path: ${{env.OPENWRT_ROOT_PATH}}
         ref: ${{env.OPENWRT_BRANCH}}
         
     - name: Update feeds
       run: |
-        cd openwrt
+        cd ${{env.OPENWRT_ROOT_PATH}}
         ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
@@ -36,14 +37,14 @@ jobs:
     - name: Load Custom Configuration
       run: |
         [ -e ${{env.CONFIG}} ] && cp ${{env.CONFIG}} openwrt/.config || echo "! CONFIG file ${{env.CONFIG}} does not exist"
-        cd openwrt
+        cd $OPENWRT_ROOT_PATH
         make defconfig
         cat .config
         
     - name: Generate Variables
       id: env
       run: |
-        cd openwrt
+        cd ${{env.OPENWRT_ROOT_PATH}}
         export DEVICE_TARGET=$(cat .config | grep CONFIG_TARGET_BOARD | awk -F '"' '{print $2}')
         echo "DEVICE_TARGET=$DEVICE_TARGET" >> $GITHUB_ENV
         echo DEVICE_TARGET is $DEVICE_TARGET
@@ -59,13 +60,13 @@ jobs:
         
     - name: Download Packages
       run: |
-        cd openwrt
+        cd ${{env.OPENWRT_ROOT_PATH}}
         make download -j${{env.THREADS}}
         df -hT
 
     - name: Generate Firmware
       run: |
-        cd openwrt
+        cd ${{env.OPENWRT_ROOT_PATH}}
         make -j${{env.THREADS}} || make -j1 V=s
         
     - name: Print Sha256sums
@@ -75,12 +76,12 @@ jobs:
     
     - name: Show bin
       run: |
-        cd openwrt/bin
+        cd ${{env.OPENWRT_ROOT_PATH}}/bin
         ls -lA
         
     - name: Show targets
       run: |
-        cd openwrt/bin/targets
+        cd ${{env.OPENWRT_ROOT_PATH}}/bin/targets
         echo ========================= $(pwd) =========================
         ls -lR
 
@@ -88,6 +89,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: openwrt-${{env.OPENWRT_VERSION}}-x86_64
-        path: openwrt/bin/targets/x86/64/*
+        path: cd ${{env.OPENWRT_ROOT_PATH}}/bin/targets/x86/64/*
 
 
