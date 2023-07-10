@@ -42,7 +42,8 @@ jobs:
       run: |
         cd openwrt
         mkdir -p package/mycustom
-        git clone -b luci2 https://github.com/kuoruan/luci-app-v2ray.git package/mycustom/luci-app-v2ray
+        # git clone -b luci2 https://github.com/kuoruan/luci-app-v2ray.git package/mycustom/luci-app-v2ray
+        echo "src-git luci-app-v2ray https://github.com/kuoruan/luci-app-v2ray.git;luci2" >> feeds.conf.default
 
     - name: Update feeds
       run: |
