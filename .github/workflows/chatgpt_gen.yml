@@ -62,6 +62,8 @@ jobs:
         cd openwrt
         ls -l .config
         cat .config
+        export DEVICE_TARGET=$(cat .config | grep CONFIG_TARGET_BOARD | awk -F '"' '{print $2}')
+        echo DEVICE_TARGET is $DEVICE_TARGET
 
     - name: Make Download
       run: |
